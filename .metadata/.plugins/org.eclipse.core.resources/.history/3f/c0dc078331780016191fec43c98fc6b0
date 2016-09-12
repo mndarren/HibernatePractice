@@ -1,0 +1,43 @@
+package com.pPoint.dto;
+import java.util.Date;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
+
+import com.pPoint.dto.UserProfile;
+
+
+public class MainApp {
+
+	public static void main(String[] args) {
+		UserProfile user = new UserProfile();
+		user.setFirstName("Merry");
+		user.setLastName("Xie");
+		user.setJoinedDate(new Date());
+		user.setEmail("mnmonicaxie@gmail.com");
+		user.setDescription("falksdfaoeiupoiejf");
+		
+		Address addr = new Address("1810 Hayes St.","Minneapolis","MN","55418");
+		Address addr2 = new Address("1810 Hayes St #16.","St. Paul","MN","55418");
+		user.getListOfAddresses().add(addr);
+		user.getListOfAddresses().add(addr2);
+		
+		Session session = HibernateUtil.getHibernateSession();
+
+		session.beginTransaction();
+		session.save(user);
+		session.getTransaction().commit();
+		session.close();
+		
+		user = null;
+		session = HibernateUtil.getHibernateSession();
+		user = (UserProfile)session.get(UserProfile.class, 1);
+		System.out.println(user);
+		session.close();
+		
+	}
+
+}

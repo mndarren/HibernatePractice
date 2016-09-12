@@ -1,0 +1,30 @@
+package com.pPoint.dto;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
+
+import com.pPoint.dto.UserProfile;
+
+
+public class MainApp {
+
+	public static void main(String[] args) {
+		UserProfile user = new UserProfile();
+//		user.setUserId(1);
+		user.setFirstName("Merry");
+		user.setLastName("Xie");
+		user.setEmail("mnmonicaxie@gmail.com");
+		
+		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+		Session session = sessionFactory.openSession();
+
+		session.beginTransaction();
+		session.save(user);
+		session.getTransaction().commit();
+		session.close();
+		
+	}
+
+}
