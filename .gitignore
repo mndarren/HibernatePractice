@@ -1,2 +1,4 @@
 #no temp file
 *~
+#ignore all file in .metadata
+.metadata/
